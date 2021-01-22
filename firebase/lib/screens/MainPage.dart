@@ -7,7 +7,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'model.dart';
+import '../model.dart';
+import 'PieceOfFurnitureScreen.dart';
+import '../main.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -168,6 +170,7 @@ class _ImageGridItemState extends State<ImageGridItem> {
   Uint8List imageFile;
   Reference photosReference = FirebaseStorage.instance.ref().child('photos');
   Color buttonColor = Colors.white;
+  Piece tempPiece;
 
   getImage() {
     int MAX_SIZE = 5 * 1024 * 1024;
@@ -234,7 +237,29 @@ class _ImageGridItemState extends State<ImageGridItem> {
           ],
         ),
         color: buttonColor,
-        onPressed: () => print('hello'),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PieceOfFurnitureScreen(
+              piece: Piece(
+                widget._name,
+                'Upholstered armchair with gentle curves and foam support. Swivel base turns 360 degrees. Chair tilts back for lounging.',
+                double.parse(widget._price),
+                imageFile,
+                'Fritz Hansen',
+                4,
+                420,
+                [
+                  Feature('vruler', '(cm)', "H:107 W:86 D:95"),
+                  Feature('weight', 'kg', "19"),
+                  Feature('rotation', 'º', "360"),
+                  Feature('designed', '', "Arne Jacobsen"),
+                ],
+                Colors.red,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
