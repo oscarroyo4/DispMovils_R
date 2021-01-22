@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Item {
@@ -23,9 +21,9 @@ class Item {
       };
 }
 
-Stream<List<Item>> todoListSnapshots() {
+Stream<List<Item>> productsListSnapshots(String orderBy) {
   final products = FirebaseFirestore.instance.collection('products');
-  return products.snapshots().map((QuerySnapshot query) {
+  return products.orderBy(orderBy).snapshots().map((QuerySnapshot query) {
     List<Item> result = [];
     for (var doc in query.docs) {
       result.add(Item.fromFirestore(doc));
