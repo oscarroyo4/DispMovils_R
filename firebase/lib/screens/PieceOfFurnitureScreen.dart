@@ -431,7 +431,7 @@ class _Favorite extends StatelessWidget {
           alignment: Alignment.center,
           height: 60,
           child: Icon(
-            Icons.favorite,
+            Icons.add_shopping_cart,
             color: Colors.white,
             size: 35,
           ),
