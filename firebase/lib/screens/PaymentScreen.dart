@@ -18,6 +18,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
   TextEditingController _namecontroller;
   TextEditingController _adresscontroller;
   TextEditingController _postcodecontroller;
+  TextEditingController _creditcardnumbercontroller;
+  TextEditingController _expirationdatecontroller;
+  TextEditingController _cvvcontroller;
   @override
   void initState() {
     _namecontroller = TextEditingController(
@@ -27,6 +30,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
       text: '',
     );
     _postcodecontroller = TextEditingController(
+      text: '',
+    );
+    _creditcardnumbercontroller = TextEditingController(
+      text: '',
+    );
+    _expirationdatecontroller = TextEditingController(
+      text: '',
+    );
+    _cvvcontroller = TextEditingController(
       text: '',
     );
     super.initState();
@@ -63,6 +75,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
             TextField(
               keyboardType: TextInputType.number,
               controller: _postcodecontroller,
+            ),
+             SizedBox(height: 80),
+            Text("Credit Card Number"),
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: _creditcardnumbercontroller,
+            ),
+            SizedBox(height: 16),
+            Text("Expiration Date"),
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: _expirationdatecontroller,
+            ),
+            SizedBox(height: 16),
+            Text("CVV"),
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: _cvvcontroller,
             ),
             Spacer(),
             Align(
