@@ -5,12 +5,20 @@ class Item {
   String name;
   num price;
   String image;
+  String details;
+  String brand;
+  num stars;
+  num valorations;
 
   Item.fromFirestore(DocumentSnapshot doc) {
     this.id = doc.id;
     this.name = doc['name'];
     this.price = doc['price'];
     this.image = doc['image'];
+    this.details = doc['details'];
+    this.brand = doc['brand'];
+    this.stars = doc['stars'];
+    this.valorations = doc['valorations'];
   }
 
   Map<String, dynamic> toFirestore() => {
@@ -18,6 +26,10 @@ class Item {
         'name': name,
         'price': price,
         'image': image,
+        'details': details,
+        'brand': brand,
+        'stars': stars,
+        'valorations': valorations,
       };
 }
 

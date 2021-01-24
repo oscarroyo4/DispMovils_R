@@ -155,11 +155,19 @@ class ImageGridItem extends StatefulWidget {
   String _name;
   String _imageName;
   String _price;
+  String _details;
+  String _brand;
+  num _stars;
+  num _valorations;
 
   ImageGridItem(Item doc) {
     this._name = doc.name;
     this._imageName = doc.image;
     this._price = doc.price.toString();
+    this._details = doc.details;
+    this._brand = doc.brand;
+    this._stars = doc.stars;
+    this._valorations = doc.valorations;
   }
 
   @override
@@ -243,12 +251,12 @@ class _ImageGridItemState extends State<ImageGridItem> {
             builder: (context) => PieceOfFurnitureScreen(
               piece: Piece(
                 widget._name,
-                'Upholstered armchair with gentle curves and foam support. Swivel base turns 360 degrees. Chair tilts back for lounging.',
+                widget._details,
                 double.parse(widget._price),
                 imageFile,
-                'Fritz Hansen',
-                4,
-                420,
+                widget._brand,
+                widget._stars,
+                widget._valorations,
                 [
                   Feature('vruler', '(cm)', "H:107 W:86 D:95"),
                   Feature('weight', 'kg', "19"),
