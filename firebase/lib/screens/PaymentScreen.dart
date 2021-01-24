@@ -1,8 +1,6 @@
 import 'package:firebase/screens/MainPage.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
-
 class PaymentScreen extends StatefulWidget {
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
