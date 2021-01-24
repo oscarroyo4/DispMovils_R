@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.1
   cloud_firestore: ^0.14.4
   firebase_storage: ^5.2.0
+  scroll_shadow_container: ^1.0.1
 
 dev_dependencies:
   flutter_test:

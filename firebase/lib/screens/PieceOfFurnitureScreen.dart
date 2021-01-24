@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../widgets/color_sample.dart';
 import '../widgets/product_feature.dart';
+import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 
 class PieceOfFurnitureScreen extends StatelessWidget {
   final Piece piece;
@@ -238,12 +239,20 @@ class _PieceDetails extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
-          descr,
-          style: TextStyle(
-            fontFamily: 'Roboto',
-            color: Colors.grey[700],
-            fontSize: 14,
+        Container(
+          height: 70,
+          child: ScrollShadowContainer(
+            elevation: MaterialElevation.the4dp,
+            child: SingleChildScrollView(
+              child: Text(
+                descr,
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  color: Colors.grey[700],
+                  fontSize: 14,
+                ),
+              ),
+            ),
           ),
         ),
       ],
