@@ -9,6 +9,7 @@ import 'dart:ui';
 
 import '../model.dart';
 import 'PieceOfFurnitureScreen.dart';
+import 'ShoppingCartScreen.dart';
 import '../main.dart';
 
 class MainPage extends StatefulWidget {
@@ -35,6 +36,41 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+
+ List<Piece> cartItems = [
+              Piece(
+                "item 1",
+                'Upholstered armchair with gentle curves and foam support. Swivel base turns 360 degrees. Chair tilts back for lounging.',
+                5,
+                null,
+                'Fritz Hansen',
+                4,
+                420,
+                [
+                  Feature('vruler', '(cm)', "H:107 W:86 D:95"),
+                  Feature('weight', 'kg', "19"),
+                  Feature('rotation', 'º', "360"),
+                  Feature('designed', '', "Arne Jacobsen"),
+                ],
+                Colors.red,
+              ),
+              Piece(
+                "item 2",
+                'Upholstered armchair with gentle curves and foam support. Swivel base turns 360 degrees. Chair tilts back for lounging.',
+                10,
+                null,
+                'Fritz Hansen',
+                4,
+                420,
+                [
+                  Feature('vruler', '(cm)', "H:107 W:86 D:95"),
+                  Feature('weight', 'kg', "19"),
+                  Feature('rotation', 'º', "360"),
+                  Feature('designed', '', "Arne Jacobsen"),
+                ],
+                Colors.red,
+              ),
+  ];
 
   Widget _makeImagesGrid(List<Item> docs, BuildContext context) {
     return Scaffold(
@@ -87,7 +123,12 @@ class _MainPageState extends State<MainPage> {
               Icons.shopping_cart,
               color: Colors.white,
             ),
-            onPressed: null,
+            onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ShoppingCartScreen(cartItems: cartItems),
+          ),
+          ),
           ),
         ],
       ),
@@ -129,6 +170,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   ValueNotifier<String> orderBy = ValueNotifier('Name');
+
 
   @override
   Widget build(BuildContext context) {
