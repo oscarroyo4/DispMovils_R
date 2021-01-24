@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
-import '../widgets/color_sample.dart';
 import '../widgets/product_feature.dart';
+import 'ShoppingCartScreen.dart';
 import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 
 class PieceOfFurnitureScreen extends StatelessWidget {
@@ -32,101 +32,8 @@ class PieceOfFurnitureScreen extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: SafeArea(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: _SearchAndCart(),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: _PieceColors(color: piece.color),
-                  ),
-                ],
-              ),
-            ),
-          )
         ],
       ),
-    );
-  }
-}
-
-class _SearchAndCart extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: 90,
-      height: 60,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.search),
-          SizedBox(width: 20),
-          Stack(
-            alignment: AlignmentDirectional.centerEnd,
-            children: [
-              Center(
-                child: Icon(Icons.shopping_bag),
-              ),
-              Align(
-                alignment: Alignment(0, -.3),
-                child: Container(
-                  width: 9,
-                  height: 9,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).accentColor,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 1,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PieceColors extends StatelessWidget {
-  final Color color;
-  _PieceColors({this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ColorSample(
-              color: Colors.white,
-              colorName: 'White',
-              selected: color == Colors.white,
-            ),
-            ColorSample(
-              color: Colors.red,
-              colorName: 'Red',
-              selected: color == Colors.red,
-            ),
-            ColorSample(
-              color: Colors.black,
-              colorName: 'Black',
-              selected: color == Colors.black,
-            )
-          ],
-        ),
-        SizedBox(width: 8),
-      ],
     );
   }
 }
@@ -166,9 +73,9 @@ class _PieceInfo extends StatelessWidget {
           Spacer(),
           Row(
             children: [
-              Expanded(flex: 8, child: _BuyNow()),
+              Expanded(flex: 8, child: _BuyNow(piece: piece)),
               SizedBox(width: 16),
-              Expanded(flex: 2, child: _Favorite(piece: piece)),
+              Expanded(flex: 2, child: _AddToCart(piece: piece)),
             ],
           ),
         ],
@@ -374,6 +281,8 @@ Widget setImageWidget(Uint8List imageFile) {
 }
 
 class _BuyNow extends StatelessWidget {
+  final Piece piece;
+  _BuyNow({@required this.piece});
   @override
   Widget build(BuildContext context) {
     return Ink(
@@ -393,9 +302,12 @@ class _BuyNow extends StatelessWidget {
         borderRadius: BorderRadius.all(
           Radius.circular(16),
         ),
-        onTap: () {
-          //Favorite pressed
-        },
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ShoppingCartScreen(cartItems: [piece]),
+          ),
+        ),
         child: Container(
           alignment: Alignment.center,
           height: 60,
@@ -413,9 +325,9 @@ class _BuyNow extends StatelessWidget {
   }
 }
 
-class _Favorite extends StatelessWidget {
+class _AddToCart extends StatelessWidget {
   final Piece piece;
-  _Favorite({this.piece});
+  _AddToCart({this.piece});
 
   @override
   Widget build(BuildContext context) {

@@ -3,60 +3,76 @@ import 'package:flutter/material.dart';
 
 import '../main.dart';
 
-
-class ShoppingCartScreen extends StatelessWidget {
+class ShoppingCartScreen extends StatefulWidget {
   final List<Piece> cartItems;
   ShoppingCartScreen({@required this.cartItems});
+
+  @override
+  _ShoppingCartScreenState createState() => _ShoppingCartScreenState();
+}
+
+class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sopping Cart'),
-      ),
-      body: Padding(padding: EdgeInsets.all(20),
-       child: Column(
-        children: [
-          Expanded(
-            flex: 9,
-          child: ListView.builder(
-            itemCount: cartItems.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(cartItems[index].name,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontFamily: 'Roboto',
-        fontSize: 18,
-      ),
-    ),
-                subtitle: Text('1 uds.'),
-                trailing: Text('${cartItems[index].price} €'),
-                onTap: null,
-                onLongPress: null,
-              );
-            },
-          ),
-          ),
-          Spacer(),
-          Row(
+        appBar: AppBar(
+          title: Text('Sopping Cart'),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
             children: [
-              SizedBox(width: 16),
-              Text('TOTAL: ' +totalPrice(cartItems)+ ' €',
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontFamily: 'Roboto',
-        fontSize: 22,
-      ),
-    ),
-              SizedBox(width: 30),
-              Expanded(flex: 8, child: _Confirm()),
+              Expanded(
+                flex: 9,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                    color: Colors.black,
+                  ),
+                  itemCount: widget.cartItems.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(
+                        widget.cartItems[index].name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto',
+                          fontSize: 18,
+                        ),
+                      ),
+                      subtitle: Container(
+                        child: Row(
+                          children: [
+                            Text('1 uds.'),
+                          ],
+                        ),
+                      ),
+                      trailing: Text('${widget.cartItems[index].price} €'),
+                      onTap: null,
+                      onLongPress: () => setState(() =>
+                          widget.cartItems.remove(widget.cartItems[index])),
+                    );
+                  },
+                ),
+              ),
+              Spacer(),
+              Row(
+                children: [
+                  SizedBox(width: 16),
+                  Text(
+                    'TOTAL: ' + totalPrice(widget.cartItems) + ' €',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                      fontSize: 22,
+                    ),
+                  ),
+                  SizedBox(width: 30),
+                  Expanded(flex: 8, child: _Confirm()),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
-      )
-     
-    );
+        ));
   }
 }
 
@@ -103,13 +119,12 @@ class _Confirm extends StatelessWidget {
   }
 }
 
-String totalPrice(List<Piece> cartItems){
+String totalPrice(List<Piece> cartItems) {
   var i = 0;
   double total = 0;
-  while (i<cartItems.length) {
+  while (i < cartItems.length) {
     total += cartItems[i].price;
     i++;
   }
-
   return total.toString();
 }

@@ -4,13 +4,6 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 
 class PaymentScreen extends StatefulWidget {
-  //final Dish dish;
-  final String title;
-  PaymentScreen({
-    //@required this.dish,
-    this.title = "Datos de Pago",
-  });
-
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
 }
@@ -48,57 +41,61 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void dispose() {
     _namecontroller.dispose();
+    _adresscontroller.dispose();
+    _postcodecontroller.dispose();
+    _creditcardnumbercontroller.dispose();
+    _expirationdatecontroller.dispose();
+    _cvvcontroller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    const List<String> plato = ['Primero', 'Segundo', 'Postre'];
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Datos de Pago"),
       ),
-      body: Padding(
+      body: ListView(
         padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Text("Name and surname",),
-            TextField(
-              controller: _namecontroller,
-            ),
-            SizedBox(height: 16),
-            Text("Adress"),
-            TextField(
-              controller: _adresscontroller,
-            ),
-            SizedBox(height: 16),
-            Text("Postcode"),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: _postcodecontroller,
-            ),
-             SizedBox(height: 80),
-            Text("Credit Card Number"),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: _creditcardnumbercontroller,
-            ),
-            SizedBox(height: 16),
-            Text("Expiration Date"),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: _expirationdatecontroller,
-            ),
-            SizedBox(height: 16),
-            Text("CVV"),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: _cvvcontroller,
-            ),
-            Spacer(),
-            _Accept(),
-          ],
-        ),
+        children: [
+          Text(
+            "Name and surname",
+          ),
+          TextField(
+            controller: _namecontroller,
+          ),
+          SizedBox(height: 16),
+          Text("Adress"),
+          TextField(
+            controller: _adresscontroller,
+          ),
+          SizedBox(height: 16),
+          Text("Postcode"),
+          TextField(
+            keyboardType: TextInputType.number,
+            controller: _postcodecontroller,
+          ),
+          SizedBox(height: 80),
+          Text("Credit Card Number"),
+          TextField(
+            keyboardType: TextInputType.number,
+            controller: _creditcardnumbercontroller,
+          ),
+          SizedBox(height: 16),
+          Text("Expiration Date"),
+          TextField(
+            keyboardType: TextInputType.number,
+            controller: _expirationdatecontroller,
+          ),
+          SizedBox(height: 16),
+          Text("CVV"),
+          TextField(
+            keyboardType: TextInputType.number,
+            controller: _cvvcontroller,
+          ),
+          Spacer(),
+          _Accept(),
+        ],
       ),
     );
   }
