@@ -91,6 +91,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             keyboardType: TextInputType.number,
             controller: _cvvcontroller,
           ),
+          SizedBox(height: 16),
           Spacer(),
           _Accept(),
         ],
@@ -119,12 +120,7 @@ class _Accept extends StatelessWidget {
         borderRadius: BorderRadius.all(
           Radius.circular(16),
         ),
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MainPage(),
-          ),
-        ),
+        onTap: () => Navigator.pop(context, true),
         child: Container(
           alignment: Alignment.center,
           height: 60,

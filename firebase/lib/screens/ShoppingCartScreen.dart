@@ -16,7 +16,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Sopping Cart'),
+          title: Text('Shopping Cart'),
         ),
         body: Padding(
           padding: EdgeInsets.all(20),
@@ -67,7 +67,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     ),
                   ),
                   SizedBox(width: 30),
-                  Expanded(flex: 8, child: _Confirm()),
+                  Expanded(
+                    flex: 8,
+                    child: _Confirm(
+                      cartItems: widget.cartItems,
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -76,7 +81,14 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 }
 
-class _Confirm extends StatelessWidget {
+class _Confirm extends StatefulWidget {
+  final List<Piece> cartItems;
+  _Confirm({this.cartItems});
+  @override
+  _ConfirmState createState() => _ConfirmState();
+}
+
+class _ConfirmState extends State<_Confirm> {
   @override
   Widget build(BuildContext context) {
     return Ink(
@@ -101,7 +113,14 @@ class _Confirm extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => PaymentScreen(),
           ),
-        ),
+        ).then((value) {
+          if (value == true) {
+            setState(() {
+              widget.cartItems.clear();
+            });
+            Navigator.pop(context);
+          }
+        }),
         child: Container(
           alignment: Alignment.center,
           height: 60,
