@@ -12,7 +12,18 @@ class ShoppingCartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Sopping Cart'),
       ),
-      body: Text(cartItems[0].name),
+      body: ListView.builder(
+        itemCount: cartItems.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(cartItems[index].name),
+            subtitle: Text('${cartItems[index].details}'),
+            trailing: Text('${cartItems[index].price} €'),
+            onTap: null,
+            onLongPress: null,
+          );
+        },
+      ),
     );
   }
 }
