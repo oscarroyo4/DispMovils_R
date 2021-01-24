@@ -1,3 +1,4 @@
+import 'package:firebase/screens/MainPage.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
@@ -95,10 +96,45 @@ class _PaymentScreenState extends State<PaymentScreen> {
               controller: _cvvcontroller,
             ),
             Spacer(),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: RaisedButton(
-                child: Text(
+            _Accept(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Accept extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Ink(
+      decoration: BoxDecoration(
+        color: Theme.of(context).accentColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey[600].withOpacity(0.5),
+            blurRadius: 12,
+          ),
+        ],
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainPage(),
+          ),
+        ),
+        child: Container(
+          alignment: Alignment.center,
+          height: 60,
+          width: 200,
+          child: Text(
             'Accept',
             style: TextStyle(
               fontFamily: 'Roboto',
@@ -106,10 +142,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
               fontSize: 25,
             ),
           ),
-                onPressed: null,
-              ),
-            ),
-          ],
         ),
       ),
     );
