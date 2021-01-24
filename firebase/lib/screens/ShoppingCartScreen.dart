@@ -12,18 +12,41 @@ class ShoppingCartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Sopping Cart'),
       ),
-      body: ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(cartItems[index].name),
-            subtitle: Text('${cartItems[index].details}'),
-            trailing: Text('${cartItems[index].price} €'),
-            onTap: null,
-            onLongPress: null,
-          );
-        },
+      body: Column(
+        children: [
+          Expanded(
+            flex: 9,
+          child: ListView.builder(
+            itemCount: cartItems.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(cartItems[index].name),
+                subtitle: Text('1 uds.'),
+                trailing: Text('${cartItems[index].price} €'),
+                onTap: null,
+                onLongPress: null,
+              );
+            },
+          ),
+          ),
+          Expanded(
+            flex: 1,
+          child: Text('TOTAL: ' +totalPrice(cartItems)+ ' €'),
+          ),
+          
+        ],
       ),
     );
   }
+}
+
+String totalPrice(List<Piece> cartItems){
+  var i = 0;
+  double total = 0;
+  while (i<cartItems.length) {
+    total += cartItems[i].price;
+    i++;
+  }
+
+  return total.toString();
 }
