@@ -13,11 +13,14 @@ import 'ShoppingCartScreen.dart';
 import '../main.dart';
 
 class MainPage extends StatefulWidget {
+  MainPage({Key key}) : super(key: key);
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  List<Piece> cartItems = new List<Piece>();
+
   Widget _buildError(error) {
     return Scaffold(
       body: Center(
@@ -36,41 +39,6 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
- List<Piece> cartItems = [
-              Piece(
-                "item 1",
-                'Upholstered armchair with gentle curves and foam support. Swivel base turns 360 degrees. Chair tilts back for lounging.',
-                5,
-                null,
-                'Fritz Hansen',
-                4,
-                420,
-                [
-                  Feature('vruler', '(cm)', "H:107 W:86 D:95"),
-                  Feature('weight', 'kg', "19"),
-                  Feature('rotation', 'º', "360"),
-                  Feature('designed', '', "Arne Jacobsen"),
-                ],
-                Colors.red,
-              ),
-              Piece(
-                "item 2",
-                'Upholstered armchair with gentle curves and foam support. Swivel base turns 360 degrees. Chair tilts back for lounging.',
-                10,
-                null,
-                'Fritz Hansen',
-                4,
-                420,
-                [
-                  Feature('vruler', '(cm)', "H:107 W:86 D:95"),
-                  Feature('weight', 'kg', "19"),
-                  Feature('rotation', 'º', "360"),
-                  Feature('designed', '', "Arne Jacobsen"),
-                ],
-                Colors.red,
-              ),
-  ];
 
   Widget _makeImagesGrid(List<Item> docs, BuildContext context) {
     return Scaffold(
@@ -124,22 +92,23 @@ class _MainPageState extends State<MainPage> {
               color: Colors.white,
             ),
             onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ShoppingCartScreen(cartItems: cartItems),
-          ),
-          ),
+              context,
+              MaterialPageRoute(
+                builder: (context) => ShoppingCartScreen(cartItems: cartItems),
+              ),
+            ),
           ),
         ],
       ),
       body: GridView.builder(
-          itemCount: docs.length,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemBuilder: (context, index) {
-            final item = docs[index];
-            return ImageGridItem(item);
-          }),
+        itemCount: docs.length,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (context, index) {
+          final item = docs[index];
+          return ImageGridItem(doc: item, cartItems: cartItems);
+        },
+      ),
     );
   }
 
@@ -171,7 +140,6 @@ class _MainPageState extends State<MainPage> {
 
   ValueNotifier<String> orderBy = ValueNotifier('Name');
 
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -201,8 +169,9 @@ class ImageGridItem extends StatefulWidget {
   String _brand;
   num _stars;
   num _valorations;
+  List<Piece> cartItems;
 
-  ImageGridItem(Item doc) {
+  ImageGridItem({Key key, Item doc, this.cartItems}) : super(key: key) {
     this._name = doc.name;
     this._imageName = doc.image;
     this._price = doc.price.toString();
@@ -213,14 +182,17 @@ class ImageGridItem extends StatefulWidget {
   }
 
   @override
-  _ImageGridItemState createState() => _ImageGridItemState();
+  _ImageGridItemState createState() => _ImageGridItemState(cartItems);
 }
 
 class _ImageGridItemState extends State<ImageGridItem> {
+  final List<Piece> cartItems;
+  _ImageGridItemState(this.cartItems);
+
   Uint8List imageFile;
   Reference photosReference = FirebaseStorage.instance.ref().child('photos');
   Color buttonColor = Colors.white;
-  Piece tempPiece;
+  //Piece tempPiece;
 
   getImage() {
     int MAX_SIZE = 5 * 1024 * 1024;
@@ -309,7 +281,13 @@ class _ImageGridItemState extends State<ImageGridItem> {
               ),
             ),
           ),
-        ),
+        ).then((piece) {
+          if (piece != null) {
+            setState(() {
+              this.cartItems.add(piece);
+            });
+          }
+        }),
       ),
     );
   }

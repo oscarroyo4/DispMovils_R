@@ -167,7 +167,7 @@ class _PieceInfo extends StatelessWidget {
             children: [
               Expanded(flex: 8, child: _BuyNow()),
               SizedBox(width: 16),
-              Expanded(flex: 2, child: _Favorite()),
+              Expanded(flex: 2, child: _Favorite(piece: piece)),
             ],
           ),
         ],
@@ -405,6 +405,9 @@ class _BuyNow extends StatelessWidget {
 }
 
 class _Favorite extends StatelessWidget {
+  final Piece piece;
+  _Favorite({this.piece});
+
   @override
   Widget build(BuildContext context) {
     return Ink(
@@ -425,7 +428,7 @@ class _Favorite extends StatelessWidget {
           Radius.circular(16),
         ),
         onTap: () {
-          //Favorite pressed
+          Navigator.pop(context, piece);
         },
         child: Container(
           alignment: Alignment.center,
